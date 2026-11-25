@@ -40,7 +40,3 @@ Then open http://localhost:8000.
 1. Push: `git push -u origin main`. If asked for a password, use a personal access token.
 2. On GitHub, go to Settings > Pages > Build and deployment > Deploy from a branch > `main`, `/ (root)` > Save.
 3. After a minute or two the site is at https://thea-ishida.github.io/leetcode-tracker/
-
-## Credits
-
-Built with help from Claude (Anthropic) for the code. The design decisions came out of an AI-assisted brainstorm documented in the sprint submission.
