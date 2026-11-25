@@ -20,7 +20,7 @@
     fell: document.getElementById('s-fell'),
   };
 
-  const COLORS = { ink: '#141414', red: '#c8281e', paper: '#f1ece1', gap: '#8a8478' };
+  const COLORS = { ink: '#141414', red: '#c8281e', gap: '#8a8478' };
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const SPEED = reduceMotion ? 0.15 : 1;
   const T_TRAVEL = 900 * SPEED;
@@ -71,8 +71,7 @@
       const perRow = Math.max(3, Math.floor((W - 2 * margin - rowShift * 3) / stepX));
       const rows = Math.ceil(n / perRow);
       const height = rows * stepY + perRow * rise + h * 4;
-      // Keep the top of the canvas clear for the red disc.
-      if (height < H * 0.78 || w <= 12) {
+      if (height < H * 0.88 || w <= 12) {
         return { w, h, stepX, rowShift, stepY, rise, margin, perRow };
       }
       w *= 0.88;
@@ -200,28 +199,8 @@
     ctx.restore();
   }
 
-  function drawBackdrop() {
-    // A fixed Suprematist ground: a red disc and one long black diagonal.
-    ctx.save();
-    ctx.fillStyle = COLORS.red;
-    ctx.globalAlpha = 0.9;
-    const r = Math.min(W, H) * 0.06;
-    ctx.beginPath();
-    ctx.arc(W - r * 2, r * 2, r, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 0.12;
-    ctx.strokeStyle = COLORS.ink;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(0, H * 0.92);
-    ctx.lineTo(W, H * 0.28);
-    ctx.stroke();
-    ctx.restore();
-  }
-
   function frame(now) {
     ctx.clearRect(0, 0, W, H);
-    drawBackdrop();
     if (!geo) { requestAnimationFrame(frame); return; }
 
     let statsDirty = false;
