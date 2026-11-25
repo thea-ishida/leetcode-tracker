@@ -1,0 +1,30 @@
+{
+  "_note": "Editable content. Replace the stand-in history with your real LeetCode submission calendar, then set standIn to false. Replace the stand-in text with your own words.",
+  "standIn": true,
+  "text": {
+    "title": "Daily Tectonic",
+    "subtitle": "STAND-IN TEXT: Every day of practice adds one shape that locks into the building. Shapes crammed into the same day cannot lock to each other, so they fall and leave gaps.",
+    "standInBanner": "Showing stand-in practice history, not real data."
+  },
+  "cramSize": 6,
+  "history": [
+    { "date": "2026-10-01", "count": 1 },
+    { "date": "2026-10-02", "count": 1 },
+    { "date": "2026-10-04", "count": 2 },
+    { "date": "2026-10-05", "count": 1 },
+    { "date": "2026-10-07", "count": 1 },
+    { "date": "2026-10-08", "count": 1 },
+    { "date": "2026-10-14", "count": 7 },
+    { "date": "2026-10-16", "count": 1 },
+    { "date": "2026-10-17", "count": 1 },
+    { "date": "2026-10-18", "count": 2 },
+    { "date": "2026-10-20", "count": 1 },
+    { "date": "2026-10-21", "count": 1 },
+    { "date": "2026-10-22", "count": 1 },
+    { "date": "2026-10-24", "count": 3 },
+    { "date": "2026-10-25", "count": 1 },
+    { "date": "2026-10-27", "count": 1 },
+    { "date": "2026-10-28", "count": 1 },
+    { "date": "2026-10-30", "count": 1 }
+  ]
+}

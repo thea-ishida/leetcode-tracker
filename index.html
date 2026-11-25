@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daily Tectonic</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1 id="title">Daily Tectonic</h1>
+    <p id="subtitle"></p>
+    <p id="banner" class="banner" hidden></p>
+  </header>
+
+  <main>
+    <div class="stage">
+      <canvas id="canvas" aria-label="A building made of practice days"></canvas>
+      <p id="hover" class="hover" aria-live="polite"></p>
+    </div>
+
+    <div class="controls">
+      <button id="practice" type="button">Practice today</button>
+      <button id="cram" type="button" class="red">Cram</button>
+      <button id="replay" type="button">Replay history</button>
+      <button id="reset" type="button" class="ghost">Clear</button>
+    </div>
+
+    <dl class="stats">
+      <div><dt>Days</dt><dd id="s-days">0</dd></div>
+      <div><dt>Problems</dt><dd id="s-problems">0</dd></div>
+      <div><dt>Held</dt><dd id="s-held">0</dd></div>
+      <div><dt>Fell</dt><dd id="s-fell">0</dd></div>
+    </dl>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
