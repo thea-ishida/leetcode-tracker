@@ -1,7 +1,7 @@
 // Daily Tectonic: a practice tracker drawn as a Suprematist building.
-// Rule: on any day, only the first problem's shape can lock into the building.
-// Shapes crammed into the same day can't lock to each other, so they hover,
-// fall, and leave a gap where they would have been.
+// Rule: every day of practice locks one shape into the building. On a cram day
+// (cramThreshold or more submissions), the extra shapes can't lock to each
+// other, so they hover, fall, and leave a gap where they would have been.
 
 (function () {
   const canvas = document.getElementById('canvas');
@@ -26,7 +26,7 @@
   const T_TRAVEL = 900 * SPEED;
   const T_HOVER = 1300 * SPEED;
 
-  let content = { standIn: false, cramSize: 6, history: [], text: {} };
+  let content = { standIn: false, cramSize: 10, cramThreshold: 10, history: [], text: {} };
   let W = 0, H = 0, geo = null;
   let pieces = [];
   let days = [];
@@ -45,7 +45,7 @@
       banner.textContent = t.standInBanner;
       banner.hidden = false;
     }
-    buttons.cram.textContent = 'Cram ' + content.cramSize + ' problems';
+    buttons.cram.textContent = 'Cram ' + content.cramSize + ' submissions';
   }
 
   function sanitizeHistory(list) {
@@ -71,7 +71,8 @@
       const perRow = Math.max(3, Math.floor((W - 2 * margin - rowShift * 3) / stepX));
       const rows = Math.ceil(n / perRow);
       const height = rows * stepY + perRow * rise + h * 4;
-      if (height < H * 0.9 || w <= 14) {
+      // Keep the top of the canvas clear for the red disc.
+      if (height < H * 0.78 || w <= 12) {
         return { w, h, stepX, rowShift, stepY, rise, margin, perRow };
       }
       w *= 0.88;
@@ -113,7 +114,8 @@
   function addDay(date, count, startAt) {
     const day = { date, count, held: 0, fell: 0 };
     days.push(day);
-    for (let i = 0; i < count; i++) {
+    const shapes = count >= content.cramThreshold ? count : 1;
+    for (let i = 0; i < shapes; i++) {
       const k = pieces.length;
       pieces.push({
         k,
@@ -156,10 +158,12 @@
   function replay() {
     clearAll();
     const hist = sanitizeHistory(content.history);
+    // Long histories replay faster so the whole year fits in about 20 seconds.
+    const step = Math.max(40, Math.min(380, 20000 / Math.max(1, hist.length))) * SPEED;
     let t = 0;
     hist.forEach(d => {
       timers.push(setTimeout(() => addDay(d.date, d.count, performance.now()), t));
-      t += 380 * SPEED + (d.count > 1 ? 160 * SPEED : 0);
+      t += step + (d.count >= content.cramThreshold ? step * 2 : 0);
     });
   }
 
@@ -167,7 +171,7 @@
     const held = pieces.filter(p => p.kind === 'lock').length;
     const fell = pieces.filter(p => p.kind === 'fall').length;
     statEls.days.textContent = days.length;
-    statEls.problems.textContent = pieces.length;
+    statEls.problems.textContent = days.reduce((n, d) => n + d.count, 0);
     statEls.held.textContent = held;
     statEls.fell.textContent = fell;
   }
@@ -277,7 +281,10 @@
     }
     if (found) {
       const d = found.day;
-      hoverEl.textContent = d.date + ': ' + d.count + (d.count === 1 ? ' problem, held' : ' problems, 1 held, ' + (d.count - 1) + ' fell');
+      const word = d.count === 1 ? ' submission' : ' submissions';
+      hoverEl.textContent = d.count >= content.cramThreshold
+        ? d.date + ': ' + d.count + word + ', crammed: 1 held, ' + (d.count - 1) + ' fell'
+        : d.date + ': ' + d.count + word + ', held';
     } else {
       hoverEl.textContent = '';
     }
@@ -300,8 +307,11 @@
     .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(data => {
       content = Object.assign(content, data);
+      const th = parseInt(content.cramThreshold, 10);
+      content.cramThreshold = Number.isFinite(th) && th > 1 ? th : 10;
       const n = parseInt(content.cramSize, 10);
-      content.cramSize = Number.isFinite(n) && n > 1 ? Math.min(n, 30) : 6;
+      content.cramSize = Number.isFinite(n) && n > 1 ? Math.min(n, 30) : content.cramThreshold;
+      if (content.cramSize < content.cramThreshold) content.cramSize = content.cramThreshold;
       applyText();
       if (!sanitizeHistory(content.history).length) buttons.replay.disabled = true;
       replay();
