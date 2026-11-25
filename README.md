@@ -17,7 +17,7 @@ LeetCode counts **submissions**, not problems solved, so retries are included. T
 
 To update the data, replace `history` with a fresh calendar in the same `{ "date": "YYYY-MM-DD", "count": N }` format.
 
-The subtitle in `content.json` is **stand-in text** and should be rewritten.
+The subtitle in `content.json` was drafted with Claude.
 
 ## Controls
 

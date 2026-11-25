@@ -1,9 +1,9 @@
 {
-  "_note": "Editable content. history is Thea's real LeetCode submission calendar (public profile theathechamp), pulled 25 Nov 2026. Counts are submissions, including retries. A day with fewer than cramThreshold submissions locks one shape; a day at or above it locks one shape and every other submission falls. Replace the stand-in subtitle with your own words.",
+  "_note": "Editable content. history is Thea's real LeetCode submission calendar (public profile theathechamp), pulled 25 Nov 2026. Counts are submissions, including retries. A day with fewer than cramThreshold submissions locks one shape; a day at or above it locks one shape and every other submission falls.",
   "standIn": false,
   "text": {
     "title": "Daily Tectonic",
-    "subtitle": "STAND-IN TEXT: One year of my LeetCode practice. Each day I practiced adds one shape that locks into the building. On days with 10 or more submissions, the extra shapes can't lock to each other, so they fall and leave gaps.",
+    "subtitle": "One year of my LeetCode practice. Each day I practiced adds one shape that locks into the building. On days with 10 or more submissions, the extra shapes can't lock to each other, so they fall and leave gaps.",
     "standInBanner": "Showing stand-in practice history, not real data."
   },
   "cramThreshold": 10,
